@@ -1,1 +1,30 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        </style>
+    </head>
+    <body>
+        <noscript>
+            You need to enable JavaScript! Thanks:)
+        </noscript>
+        <div>
+            Hello yo all!
+        </div>
+        <div id='custom'>
+
+        </div>
+        <script>
+            let arr = [1,1,3,6,3,7,9,3];
+            let func = ()=>{
+                arr.forEach((val)=>{
+                    let div = document.createElement('div');
+                    let textNode = document.createTextNode(val);
+                    div.appendChild(textNode);
+                    document.getElementsByTagName('body')[0].appendChild(div);
+                })
+            }
+            func();
+        </script>
+    </body>
+</html>
