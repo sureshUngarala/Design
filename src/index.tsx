@@ -10,4 +10,4 @@ class Cust extends React.Component{
     }
 }
 
-ReactDOM.render(<Cust/>,document.getElementById('custom'));
+ReactDOM.render(<Cust/>, document.getElementById('custom'));
