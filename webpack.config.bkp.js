@@ -1,8 +1,12 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlPlugin = require('html-webpack-plugin');
 const TSLintPlugin = require('tslint-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
 
+//run with --mode=production/development flag in npm scripts
 module.exports = (env, args) => {
     const devMode = args.mode === 'development';
     console.log('devMode ' + devMode);
@@ -29,7 +33,21 @@ module.exports = (env, args) => {
                 }
             ]
         },
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {   //creating separate bundle node modules
+                        chunks: "initial",
+                        test: path.resolve(__dirname, "node_modules"),
+                        name: "vendor",
+                        filename:"vendor.bundle.js",
+                        enforce: true,
+                    }
+                }
+            }
+        },
         plugins: [  //for bundled files
+            new CleanWebpackPlugin(['dist/*.*']),
             new htmlPlugin({
                 template: './src/index.html'
             }),
@@ -39,6 +57,9 @@ module.exports = (env, args) => {
             new MiniCssExtractPlugin({  //doesn't work without 'MiniCssExtractPlugin.loader'. So, works only in prod mode.
                 filename: '[name].[hash].css',
                 chunkFilename: '[id].[hash].css',
+            }),
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static'
             })
         ]
     };
