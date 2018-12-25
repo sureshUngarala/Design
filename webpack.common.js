@@ -14,7 +14,11 @@ module.exports = {
             { test: /\.(js|jsx|ts|tsx)$/, use: 'babel-loader', exclude: /node_modules/, },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { test: /\.(js|jsx|ts|tsx)$/, loader: "source-map-loader", enforce: "pre" },
-            { test: /\.(ts|tsx)?$/, loader: 'ts-loader', exclude: /node_modules/ }
+            { test: /\.(ts|tsx)?$/, loader: 'ts-loader', exclude: /node_modules/ },
+            { test: /\.(woff|woff2)/, loader: 'file-loader', options: {
+                name: '[name].[ext]',
+                outputPath:'fonts/'
+            }}
         ]
     },
     optimization: {
@@ -31,7 +35,7 @@ module.exports = {
         }
     },
     plugins: [  //for bundled files
-        new CleanWebpackPlugin(['dist/*.*']),
+        new CleanWebpackPlugin(['dist/*']),
         new htmlPlugin({
             template: './src/index.html'
         }),
